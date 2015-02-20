@@ -65,6 +65,13 @@ namespace BizTalkComponents.PipelineComponents.ContextRegExReplace
 
         public IBaseMessage Execute(IPipelineContext pContext, IBaseMessage pInMsg)
         {
+            string errorMessage;
+
+            if (!Validate(out errorMessage))
+            {
+                throw new ArgumentException(errorMessage);
+            }
+
             pInMsg.BodyPart.Data = ReadStreamToEndAndSeekToBeginning(pInMsg.BodyPart.Data, true, 1048576);
 
             var regex = new Regex(PatternToReplace);
