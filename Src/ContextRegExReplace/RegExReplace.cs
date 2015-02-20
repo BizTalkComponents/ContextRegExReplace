@@ -13,7 +13,7 @@ namespace BizTalkComponents.PipelineComponents.ContextRegExReplace
     [ComponentCategory(CategoryTypes.CATID_Any)]
     [System.Runtime.InteropServices.Guid("F691AB78-716A-4EEE-888D-8292F54812D3")]
 
-    public class RegExReplaceComponent : IBaseComponent,
+    public partial class RegExReplace : IBaseComponent,
         Microsoft.BizTalk.Component.Interop.IComponent,
         IComponentUI,
         IPersistPropertyBag
