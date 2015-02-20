@@ -1,4 +1,5 @@
-﻿using Microsoft.BizTalk.Component.Interop;
+﻿using BizTalkComponents.Utils;
+using Microsoft.BizTalk.Component.Interop;
 using Microsoft.BizTalk.Message.Interop;
 using Microsoft.BizTalk.Streaming;
 using System;
@@ -28,68 +29,26 @@ namespace BizTalkComponents.PipelineComponents.ContextRegExReplace
 
         public virtual void Load(IPropertyBag pb, int errlog)
         {
+            PatternToReplace =
+                PropertyBagHelper.ToStringOrDefault(
+                    PropertyBagHelper.ReadPropertyBag(pb, PatternToReplacePropertyName), string.Empty);
 
-            var val = ReadPropertyBag(pb, PatternToReplacePropertyName);
-            if ((val != null))
-            {
-                PatternToReplace = ((string)(val));
-            }
+            ValueToSet =
+                PropertyBagHelper.ToStringOrDefault(
+                    PropertyBagHelper.ReadPropertyBag(pb, ValueToSetPropertyName), string.Empty);
 
-            val = ReadPropertyBag(pb, ValueToSetPropertyName);
-            if ((val != null))
-            {
-                ValueToSet = ((string)(val));
-            }
-
-            val = ReadPropertyBag(pb, ContextNamespacePropertyName);
-            if ((val != null))
-            {
-                ContextNamespace = ((string)(val));
-            }
+            ContextNamespace =
+                PropertyBagHelper.ToStringOrDefault(
+                    PropertyBagHelper.ReadPropertyBag(pb, ContextNamespacePropertyName), string.Empty);
         }
 
         public virtual void Save(IPropertyBag pb, bool fClearDirty,
             bool fSaveAllProperties)
         {
-            WritePropertyBag(pb, PatternToReplacePropertyName, PatternToReplace);
-            WritePropertyBag(pb, ValueToSetPropertyName, ValueToSet);
-            WritePropertyBag(pb, ContextNamespacePropertyName, ContextNamespace);
+            PropertyBagHelper.WritePropertyBag(pb, PatternToReplacePropertyName,PatternToReplace);
+            PropertyBagHelper.WritePropertyBag(pb, ValueToSetPropertyName, ValueToSet);
+            PropertyBagHelper.WritePropertyBag(pb, ContextNamespacePropertyName, ContextNamespace);
         }
-
-        #region Utility functionality
-
-        private static void WritePropertyBag(IPropertyBag pb, string propName, object val)
-        {
-            try
-            {
-                pb.Write(propName, ref val);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException(ex.Message);
-            }
-        }
-
-        private static object ReadPropertyBag(IPropertyBag pb, string propName)
-        {
-            object val = null;
-            try
-            {
-                pb.Read(propName, out val, 0);
-            }
-
-            catch (ArgumentException)
-            {
-                return val;
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException(ex.Message);
-            }
-            return val;
-        }
-
-        #endregion
         
         #region IComponent members
 
