@@ -18,6 +18,10 @@ namespace BizTalkComponents.PipelineComponents.ContextRegExReplace
         IComponentUI,
         IPersistPropertyBag
     {
+        private const string PatternToReplacePropertyName = "PatternToReplace";
+        private const string ValueToSetPropertyName = "ValueToSet";
+        private const string ContextNamespacePropertyName = "ContextNamespace";
+
         public string PatternToReplace { get; set; }
         public string ValueToSet { get; set; }
         public string ContextNamespace { get; set; }
@@ -25,19 +29,19 @@ namespace BizTalkComponents.PipelineComponents.ContextRegExReplace
         public virtual void Load(IPropertyBag pb, int errlog)
         {
 
-            var val = ReadPropertyBag(pb, "PatternToReplace");
+            var val = ReadPropertyBag(pb, PatternToReplacePropertyName);
             if ((val != null))
             {
                 PatternToReplace = ((string)(val));
             }
 
-            val = ReadPropertyBag(pb, "ValueToSet");
+            val = ReadPropertyBag(pb, ValueToSetPropertyName);
             if ((val != null))
             {
                 ValueToSet = ((string)(val));
             }
 
-            val = ReadPropertyBag(pb, "ContextNamespace");
+            val = ReadPropertyBag(pb, ContextNamespacePropertyName);
             if ((val != null))
             {
                 ContextNamespace = ((string)(val));
@@ -47,9 +51,9 @@ namespace BizTalkComponents.PipelineComponents.ContextRegExReplace
         public virtual void Save(IPropertyBag pb, bool fClearDirty,
             bool fSaveAllProperties)
         {
-            WritePropertyBag(pb, "PatternToReplace", PatternToReplace);
-            WritePropertyBag(pb, "ValueToSet", ValueToSet);
-            WritePropertyBag(pb, "ContextNamespace", ContextNamespace);
+            WritePropertyBag(pb, PatternToReplacePropertyName, PatternToReplace);
+            WritePropertyBag(pb, ValueToSetPropertyName, ValueToSet);
+            WritePropertyBag(pb, ContextNamespacePropertyName, ContextNamespace);
         }
 
         #region Utility functionality
