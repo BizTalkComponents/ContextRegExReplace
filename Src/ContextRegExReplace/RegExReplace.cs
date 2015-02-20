@@ -1,4 +1,5 @@
-﻿using BizTalkComponents.Utils;
+﻿using System.ComponentModel.DataAnnotations;
+using BizTalkComponents.Utils;
 using Microsoft.BizTalk.Component.Interop;
 using Microsoft.BizTalk.Message.Interop;
 using Microsoft.BizTalk.Streaming;
@@ -23,8 +24,20 @@ namespace BizTalkComponents.PipelineComponents.ContextRegExReplace
         private const string ValueToSetPropertyName = "ValueToSet";
         private const string ContextNamespacePropertyName = "ContextNamespace";
 
+        [DisplayName("Pattern To Replace")]
+        [Description("Regular expression to use when replacing.")]
+        [RequiredRuntime]
         public string PatternToReplace { get; set; }
+
+        [DisplayName("Value to Set")]
+        [Description("The value to replace any matches on the RegEx pattern with.")]
+        [RequiredRuntime]
         public string ValueToSet { get; set; }
+
+        [DisplayName("Context Namespace")]
+        [Description("The path to the context property to replace.")]
+        [RegularExpression(@"^.*#.*$",
+       ErrorMessage = "A property path should be formatted as namespace#property.")]
         public string ContextNamespace { get; set; }
 
         public virtual void Load(IPropertyBag pb, int errlog)
@@ -45,11 +58,11 @@ namespace BizTalkComponents.PipelineComponents.ContextRegExReplace
         public virtual void Save(IPropertyBag pb, bool fClearDirty,
             bool fSaveAllProperties)
         {
-            PropertyBagHelper.WritePropertyBag(pb, PatternToReplacePropertyName,PatternToReplace);
+            PropertyBagHelper.WritePropertyBag(pb, PatternToReplacePropertyName, PatternToReplace);
             PropertyBagHelper.WritePropertyBag(pb, ValueToSetPropertyName, ValueToSet);
             PropertyBagHelper.WritePropertyBag(pb, ContextNamespacePropertyName, ContextNamespace);
         }
-        
+
         public IBaseMessage Execute(IPipelineContext pContext, IBaseMessage pInMsg)
         {
             pInMsg.BodyPart.Data = ReadStreamToEndAndSeekToBeginning(pInMsg.BodyPart.Data, true, 1048576);
