@@ -1,0 +1,19 @@
+<Project DefaultTargets="GenerateMsi" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\BtsMsiTask\0.5\BtsMsiTask.targets" />
+  <PropertyGroup>
+    <ApplicationName>Shared</ApplicationName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="$(OutDir)\Shared.PipelineComponents.ContextRegExReplace.dll" />
+  </ItemGroup>
+
+  <Target Name="GenerateMsi">
+    <MsiTask  ApplicationDescription="$(ApplicationDescription)"
+                  FileName ="Deploy.msi"
+                  DestinationPath="$(DestinationPath)"
+                  SourceLocation="$(DestinationPath)"
+                  ApplicationName="$(ApplicationName)"
+                  Resources="@(Resource)" />
+  </Target>
+</Project>
