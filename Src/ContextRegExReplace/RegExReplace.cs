@@ -50,32 +50,30 @@ namespace BizTalkComponents.PipelineComponents.ContextRegExReplace
             PropertyBagHelper.WritePropertyBag(pb, ContextNamespacePropertyName, ContextNamespace);
         }
         
-        #region IComponent members
-
         public IBaseMessage Execute(IPipelineContext pContext, IBaseMessage pInMsg)
         {
             pInMsg.BodyPart.Data = ReadStreamToEndAndSeekToBeginning(pInMsg.BodyPart.Data, true, 1048576);
 
             var regex = new Regex(PatternToReplace);
 
+            string valueToReplace;
 
-            var value = pInMsg.Context.Read(ContextNamespace.PropertyName(), ContextNamespace.PropertyNamespace());
-
-            if (value == null || string.IsNullOrEmpty(value.ToString()))
+            if (!pInMsg.Context.TryRead(new ContextProperty(ContextNamespace), out valueToReplace))
+            {
                 throw new ArgumentException("Property to replace can be null");
+            }
 
-            var isPromoted = pInMsg.Context.IsPromoted(ContextNamespace.PropertyName(), ContextNamespace.PropertyNamespace());
+            var isPromoted = pInMsg.Context.IsPromoted(new ContextProperty(ContextNamespace));
 
-
-            var result = regex.Replace(value.ToString(), ValueToSet);
+            var result = regex.Replace(valueToReplace, ValueToSet);
 
             if (isPromoted)
             {
-                pInMsg.Context.Promote(ContextNamespace.PropertyName(), ContextNamespace.PropertyNamespace(), result);
+                pInMsg.Context.Promote(new ContextProperty(ContextNamespace), result);
             }
             else
             {
-                pInMsg.Context.Write(ContextNamespace.PropertyName(), ContextNamespace.PropertyNamespace(), result);
+                pInMsg.Context.Write(new ContextProperty(ContextNamespace), result);
             }
 
             return pInMsg;
@@ -95,8 +93,5 @@ namespace BizTalkComponents.PipelineComponents.ContextRegExReplace
 
             return outputStream;
         }
-
-
-        #endregion
     }
 }
