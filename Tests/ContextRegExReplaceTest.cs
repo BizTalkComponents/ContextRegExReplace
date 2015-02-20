@@ -18,11 +18,11 @@ namespace BizTalkComponents.PipelineComponents.ContextRegExReplace.Tests
 
             SendPipelineWrapper sendPipeline = PipelineFactory.CreateEmptySendPipeline();
 
-            IBaseComponent component = new RegExReplaceComponent();
+            IBaseComponent component = new RegExReplace();
 
-            ((RegExReplaceComponent)component).ContextNamespace = "http://test.se/prop#test";
-            ((RegExReplaceComponent)component).PatternToReplace = @"(^.*\\)(.*$)";
-            ((RegExReplaceComponent)component).ValueToSet = "$2";
+            ((RegExReplace)component).ContextNamespace = "http://test.se/prop#test";
+            ((RegExReplace)component).PatternToReplace = @"(^.*\\)(.*$)";
+            ((RegExReplace)component).ValueToSet = "$2";
 
             sendPipeline.AddComponent(component, PipelineStage.Encode);
 
@@ -40,11 +40,11 @@ namespace BizTalkComponents.PipelineComponents.ContextRegExReplace.Tests
 
             SendPipelineWrapper sendPipeline = PipelineFactory.CreateEmptySendPipeline();
 
-            IBaseComponent component = new RegExReplaceComponent();
+            IBaseComponent component = new RegExReplace();
 
-            ((RegExReplaceComponent)component).ContextNamespace = "http://test.se/prop#test";
-            ((RegExReplaceComponent)component).PatternToReplace = @"txt";
-            ((RegExReplaceComponent)component).ValueToSet = "xml";
+            ((RegExReplace)component).ContextNamespace = "http://test.se/prop#test";
+            ((RegExReplace)component).PatternToReplace = @"txt";
+            ((RegExReplace)component).ValueToSet = "xml";
 
             sendPipeline.AddComponent(component, PipelineStage.Encode);
 
