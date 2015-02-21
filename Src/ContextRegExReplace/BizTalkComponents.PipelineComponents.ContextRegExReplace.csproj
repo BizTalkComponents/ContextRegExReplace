@@ -9,12 +9,15 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BizTalkComponents.PipelineComponents.ContextRegExReplace</RootNamespace>
     <AssemblyName>BizTalkComponents.PipelineComponents.ContextRegExReplace</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,7 +40,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>BizTalkComponents.ContextRegExReplace.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>BizTalkComponents.PipelineComponents.ContextRegExReplace.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.BizTalk.Pipeline, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -46,6 +49,7 @@
     </Reference>
     <Reference Include="Microsoft.BizTalk.Streaming, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -54,14 +58,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RegExReplaceComponent.cs" />
+    <Compile Include="BiztalkComponents.Utils\ContextExtensions.cs" />
+    <Compile Include="BiztalkComponents.Utils\ContextProperties.cs" />
+    <Compile Include="BiztalkComponents.Utils\ContextProperty.cs" />
+    <Compile Include="BiztalkComponents.Utils\PropertyBagHelper.cs" />
+    <Compile Include="BiztalkComponents.Utils\RequiredRuntimeAttribute.cs" />
+    <Compile Include="BiztalkComponents.Utils\ValidationHelper.cs" />
+    <Compile Include="RegExReplace.Component.cs" />
+    <Compile Include="RegExReplace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BizTalkComponents.ContextRegExReplace.snk" />
+    <None Include="BizTalkComponents.PipelineComponents.ContextRegExReplace.nuspec" />
+    <None Include="BizTalkComponents.PipelineComponents.ContextRegExReplace.snk" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

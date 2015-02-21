@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>BizTalkComponents.PipelineComponents.ContextRegExReplace</id>
+    <version>1.0.0.0</version>
+    <authors>riha</authors>
+    <description>Replaces a context value that matches a specific pattern.</description>
+    <projectUrl>https://github.com/BizTalkComponents/ContextRegExReplace</projectUrl>
+    <tags>BizTalk</tags>
+  </metadata>
+</package>
