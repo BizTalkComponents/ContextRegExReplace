@@ -68,6 +68,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="BizTalkComponents.PipelineComponents.ContextRegExReplace.nuspec" />
     <None Include="BizTalkComponents.ContextRegExReplace.snk" />
     <None Include="packages.config" />
   </ItemGroup>
