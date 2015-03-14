@@ -15,7 +15,7 @@
   </Target>
   <Target Name="GenerateMsi" DependsOnTargets="GetVersion">
     <MsiTask
-			FileName="%(ApplicationName)_%(Info.AssemblyInformationalVersion).msi"
+			FileName="$(ApplicationName)_%(Info.AssemblyInformationalVersion).msi"
 			DestinationPath="$(DestinationPath)"
       SourceLocation="C:\%(Info.AssemblyInformationalVersion)"
 			ApplicationName="$(ApplicationName)"
