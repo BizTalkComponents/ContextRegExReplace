@@ -1,5 +1,6 @@
 <Project DefaultTargets="GenerateMsi" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\BtsMsiTask\BtsMsiTask.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\ExtensionPack\4.0\MSBuild.ExtensionPack.tasks"/>
   <PropertyGroup>
     <DestinationPath>.</DestinationPath>
     <ApplicationName>BizTalkComponents.PipelineComponents.ContextRegExReplace</ApplicationName>
@@ -7,11 +8,16 @@
   <ItemGroup>
     <Resource Include="..\Src\ContextRegExReplace\bin\Debug\BizTalkComponents.PipelineComponents.ContextRegExReplace.dll" />
   </ItemGroup>
-
-  <Target Name="GenerateMsi">
+<Target Name="GetVersion">
+    <MSBuild.ExtensionPack.Framework.Assembly TaskAction="GetInfo" NetAssembly="..\Src\ContextRegExReplace\bin\Debug\BizTalkComponents.PipelineComponents.ContextRegExReplace.dll">
+      <Output TaskParameter="OutputItems" ItemName="Info"/>
+    </MSBuild.ExtensionPack.Framework.Assembly>
+  </Target>
+  <Target Name="GenerateMsi" DependsOnTargets="GetVersion">
     <MsiTask
-			FileName="$(FileName)"
+			FileName="%(ApplicationName)_%(Info.AssemblyInformationalVersion).msi"
 			DestinationPath="$(DestinationPath)"
+      SourceLocation="C:\%(Info.AssemblyInformationalVersion)"
 			ApplicationName="$(ApplicationName)"
 			Resources="@(Resource)" />
   </Target>
