@@ -43,16 +43,13 @@ namespace BizTalkComponents.PipelineComponents.ContextRegExReplace
         public virtual void Load(IPropertyBag pb, int errlog)
         {
             PatternToReplace =
-                PropertyBagHelper.ToStringOrDefault(
-                    PropertyBagHelper.ReadPropertyBag(pb, PatternToReplacePropertyName), string.Empty);
+                    PropertyBagHelper.ReadPropertyBag(pb, PatternToReplacePropertyName, PatternToReplace);
 
             ValueToSet =
-                PropertyBagHelper.ToStringOrDefault(
-                    PropertyBagHelper.ReadPropertyBag(pb, ValueToSetPropertyName), string.Empty);
+                    PropertyBagHelper.ReadPropertyBag(pb, ValueToSetPropertyName, ValueToSet);
 
             ContextNamespace =
-                PropertyBagHelper.ToStringOrDefault(
-                    PropertyBagHelper.ReadPropertyBag(pb, ContextNamespacePropertyName), string.Empty);
+                    PropertyBagHelper.ReadPropertyBag(pb, ContextNamespacePropertyName, ContextNamespace);
         }
 
         public virtual void Save(IPropertyBag pb, bool fClearDirty,
