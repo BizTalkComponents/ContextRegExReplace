@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.BizTalk.Component.Interop;
 
 namespace BizTalkComponents.Utils
@@ -21,6 +22,7 @@ namespace BizTalkComponents.Utils
         /// <param name="pb">Property bag</param>
         /// <param name="propName">Name of property</param>
         /// <returns>Value of the property</returns>
+        [Obsolete("Use ReadPropertyBag<T>(IPropertyBag pb, stringPropName, T oldValue instead.")]
         public static object ReadPropertyBag(IPropertyBag pb, string propName)
         {
             object val = null;
@@ -37,6 +39,54 @@ namespace BizTalkComponents.Utils
                 throw new ApplicationException(e.Message);
             }
             return val;
+        }
+
+        [Obsolete("Use ReadPropertyBag<T>(IPropertyBag pb, stringPropName, T oldValue instead.")]
+        public static T ReadPropertyBag<T>(IPropertyBag pb, string propName)
+        {
+            try
+            {
+                object val;
+                pb.Read(propName, out val, 0);
+
+                return val is T ? (T)val : default(T);
+            }
+            catch (ArgumentException)
+            {
+                return default(T);
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException(e.Message);
+            }
+        }
+
+        public static T ReadPropertyBag<T>(IPropertyBag pb, string propName, T oldValue)
+        {
+            try
+            {
+                object val;
+                pb.Read(propName, out val, 0);
+
+                if (val == null)
+                {
+                    return oldValue;
+                }
+                
+                return val is T ? (T)val : default(T);
+            }
+            catch (ArgumentException)
+            {
+                return default(T);
+            }
+            catch (InvalidCastException)
+            {
+                return default(T);
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException(e.Message);
+            }
         }
 
         /// <summary>
