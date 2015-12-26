@@ -31,7 +31,6 @@ namespace BizTalkComponents.PipelineComponents.ContextRegExReplace
 
         [DisplayName("Value to Set")]
         [Description("The value to replace any matches on the RegEx pattern with.")]
-        [RequiredRuntime]
         public string ValueToSet { get; set; }
 
         [DisplayName("Context Namespace")]
